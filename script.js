@@ -12,6 +12,15 @@ const addedSongsContainer = document.getElementById("addedSongs");
 const currentKeyLabel = document.getElementById("currentKey");
 const noteSelector = document.getElementById("noteSelector");
 const capoSelector = document.getElementById("capoSelector");
+document.addEventListener("click", (e) => {
+  const clickedInsideSidebar = sidebar.contains(e.target);
+  const clickedMenuBtn = menuBtn.contains(e.target);
+
+  if (!clickedInsideSidebar && !clickedMenuBtn) {
+    sidebar.classList.remove("active");
+  }
+});
+
 
 // ====================
 // BOTONES SUBIR/BAJAR
@@ -175,4 +184,16 @@ document.querySelector(".search").addEventListener("input", function(){
 document.getElementById("clearSongsBtn").onclick = () => {
   addedSongsContainer.innerHTML = "";
 };
+
+
+const fullscreenBtn = document.getElementById("fullscreenBtn");
+
+fullscreenBtn.onclick = () => {
+  if (!document.fullscreenElement) {
+    document.documentElement.requestFullscreen();
+  } else {
+    document.exitFullscreen();
+  }
+};
+
 
