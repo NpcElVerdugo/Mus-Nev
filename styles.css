@@ -20,8 +20,8 @@ body {
 .sidebar {
   position: fixed;
   top: 50px;
-  right: -260px;
-  width: 260px;
+  right: -290px;
+  width: 1300px;
   height: calc(100% - 50px);
   background: #161616;
   padding: 15px;
@@ -57,7 +57,8 @@ body {
   background: #161616;
   border: none;
   text-align: left;
-  border-left: 4px solid transparent;
+  color: white
+  border-left: 4px solid #48ff00;
 }
 
 .genre-btn:hover {
@@ -77,7 +78,8 @@ body {
   background: #161616;
   border: none;
   text-align: left;
-  border-left: 4px solid transparent;
+  color: white
+  border-left: 4px solid #ffee00;
 }
 
 .song-btn:hover {
