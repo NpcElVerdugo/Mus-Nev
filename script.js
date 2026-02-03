@@ -123,34 +123,32 @@ function transposeChord(chord, step){
 // ====================
 // AGREGAR CANCIÓN
 // ====================
-document.getElementById("addSongBtn").onclick = () => {
-  if (!activeSong) return;
+document.querySelectorAll(".addSongBtn").forEach(btn => {
+  btn.onclick = () => {
+    if (!activeSong) return;
 
-  const songDiv = document.createElement("div");
-  songDiv.classList.add("added-song");
+    const songDiv = document.createElement("div");
+    songDiv.classList.add("added-song");
 
-  // Nombre de la canción
-  const songName = document.createElement("p");
-  songName.textContent = document.querySelector('.song-btn:focus')?.textContent || "Canción";
-  songName.style.fontWeight = "bold";
-  songName.style.marginBottom = "5px";
-  songDiv.appendChild(songName);
+    const songName = document.createElement("p");
+    songName.textContent =
+      btn.closest(".songs")
+         .querySelector(".song-btn:focus")?.textContent || "Canción";
+    songName.style.fontWeight = "bold";
+    songDiv.appendChild(songName);
 
-  // Nota original y actual
-  const keyInfo = document.createElement("p");
-  keyInfo.textContent = `Original: ${originalKey}, Actual: ${currentKeyLabel.textContent}`;
-  keyInfo.style.fontSize = "0.9em";
-  keyInfo.style.marginBottom = "5px";
-  songDiv.appendChild(keyInfo);
+    const keyInfo = document.createElement("p");
+ 
+    songDiv.appendChild(keyInfo);
 
-  // Contenido de acordes
-  const cloned = document.createElement("pre");
-  cloned.classList.add("chord-sheet");
-  cloned.textContent = activeSong.textContent;
-  songDiv.appendChild(cloned);
+    const cloned = document.createElement("pre");
+    cloned.classList.add("chord-sheet");
+    cloned.textContent = activeSong.textContent;
 
-  addedSongsContainer.appendChild(songDiv);
-};
+    songDiv.appendChild(cloned);
+    addedSongsContainer.appendChild(songDiv);
+  };
+});
 
 // ====================
 // BARRA DE BÚSQUEDA
@@ -169,3 +167,12 @@ document.querySelector(".search").addEventListener("input", function(){
     section.style.display = anyMatch ? "block" : "none";
   });
 });
+
+
+// ====================
+// BORRAR CANCIÓN
+// ====================
+document.getElementById("clearSongsBtn").onclick = () => {
+  addedSongsContainer.innerHTML = "";
+};
+
