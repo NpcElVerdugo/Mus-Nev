@@ -41,7 +41,7 @@ body {
 }
 
 .search {
-  width: 100%;
+  width: 30%;
   padding: 10px;
   margin-bottom: 10px;
   background: #000;
@@ -102,9 +102,9 @@ body {
 
 /* FOOTER */
 .bottom-bar {
-  position: fixed;
+  position: relative;
   bottom: 0;
-  width: 100%;
+  width: 98%;
   background: #161616;
   padding: 10px;
   border-top: 1px solid #cc6f12;
