@@ -57,7 +57,7 @@ body {
   background: #161616;
   border: none;
   text-align: left;
-  color: white
+  color: white;
   border-left: 4px solid #48ff00;
 }
 
@@ -78,8 +78,8 @@ body {
   background: #161616;
   border: none;
   text-align: left;
-  color: white
-  border-left: 4px solid #ffee00;
+  color: white;
+  border-left: 4px solid #48ff00;
 }
 
 .song-btn:hover {
