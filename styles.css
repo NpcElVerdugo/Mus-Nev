@@ -1,0 +1,137 @@
+/* BODY Y HEADER */
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  background: #0b0b0b;
+  color: #f5f5f5;
+}
+
+.top-bar {
+  height: 50px;
+  background: #161616;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 15px;
+  border-bottom: 1px solid #cc6f12;
+}
+
+/* SIDEBAR */
+.sidebar {
+  position: fixed;
+  top: 50px;
+  right: -260px;
+  width: 260px;
+  height: calc(100% - 50px);
+  background: #161616;
+  padding: 15px;
+  border-left: 2px solid #cc6f12;
+  transition: right 0.3s ease;
+  z-index: 10;
+}
+
+.sidebar.active {
+  right: 0;
+}
+
+/* MAIN CONTENT */
+.content {
+  padding: 10px;
+  padding-bottom: 70px;
+}
+
+.search {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  background: #000;
+  color: #f5f5f5;
+  border: 1px solid #cc6f12;
+}
+
+/* CATEGORÍAS */
+.genre-btn {
+  width: 100%;
+  padding: 12px;
+  margin-top: 5px;
+  background: #161616;
+  border: none;
+  text-align: left;
+  border-left: 4px solid transparent;
+}
+
+.genre-btn:hover {
+  border-left: 4px solid #ff8c1a;
+}
+
+.songs {
+  display: none;
+  padding-left: 10px;
+}
+
+/* CANCIONES */
+.song-btn {
+  width: 100%;
+  padding: 10px;
+  margin-top: 2px;
+  background: #161616;
+  border: none;
+  text-align: left;
+  border-left: 4px solid transparent;
+}
+
+.song-btn:hover {
+  border-left: 4px solid #ff8c1a;
+}
+
+.song-content {
+  display: none;
+  padding: 10px;
+  background: #000;
+}
+
+.chord-sheet {
+  font-family: "Courier New", monospace;
+  font-size: 16px;
+  white-space: pre;
+  line-height: 1.4;
+  color: #ff8c1a;
+}
+
+/* FOOTER */
+.bottom-bar {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background: #161616;
+  padding: 10px;
+  border-top: 1px solid #cc6f12;
+}
+
+.bottom-bar button {
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(135deg, #ff8c1a, #cc6f12);
+  color: #000;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+}
+
+
+
+.added-song {
+  margin: 10px 0;
+  padding: 10px;
+  background: #000;
+  border-left: 4px solid #ff8c1a;
+}
+
+.added-song .chord-sheet {
+  font-family: "Courier New", monospace;
+  color: #ff8c1a;
+  white-space: pre;
+  line-height: 1.4;
+  font-size: 16px;
+}

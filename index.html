@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Mus-Nev</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="top-bar">
+  <span class="title">🎵 Mus-Nev</span>
+  <button id="menuBtn">☰</button>
+</header>
+
+<!-- SIDEBAR -->
+<aside class="sidebar" id="sidebar">
+  <h3>Tonalidad</h3>
+  <p>Original: <strong id="originalKey">C</strong></p>
+  <p>Actual: <strong id="currentKey">C</strong></p>
+
+  <!-- Botones subir/bajar tono -->
+  <div class="transpose-buttons">
+    <button id="downHalf">⬇½</button>
+    <button id="downKey">⬇</button>
+    <button id="upKey">⬆</button>
+    <button id="upHalf">⬆½</button>
+  </div>
+
+  <!-- Selector de nota -->
+  <h4>Seleccionar nota</h4>
+  <select id="noteSelector">
+    <option>C</option><option>C#</option><option>D</option><option>D#</option>
+    <option>E</option><option>F</option><option>F#</option><option>G</option>
+    <option>G#</option><option>A</option><option>A#</option><option>B</option>
+  </select>
+
+  <!-- Capo -->
+  <h3>Capo</h3>
+  <select id="capoSelector">
+    <option value="0">Sin capo</option>
+    <option value="1">Capo 1</option>
+    <option value="2">Capo 2</option>
+    <option value="3">Capo 3</option>
+  </select>
+</aside>
+
+
+<!-- MAIN -->
+<main class="content">
+  <input type="text" class="search" placeholder="🔍 Buscar canción...">
+
+  <!-- CATEGORÍA / GÉNERO 1 -->
+  <section class="genre-section">
+    <button class="genre-btn">Género 1</button>
+    <div class="songs">
+
+      <!-- Canción 1 -->
+<button class="song-btn" data-original-key="C">Canción 1</button>
+<div class="song-content">
+  <pre class="chord-sheet">
+C       G
+Letra de la canción 1
+Am      F
+Otra línea aquí
+  </pre>
+</div>
+
+<!-- Canción 2 -->
+<button class="song-btn" data-original-key="D">Canción 2</button>
+<div class="song-content">
+  <pre class="chord-sheet">
+D       A
+Letra que va a ser de la canción 2
+Bm      G
+Segunda línea
+  </pre>
+</div>
+
+
+    </div>
+  </section>
+
+  <!-- CATEGORÍA / GÉNERO 2 -->
+  <section class="genre-section">
+    <button class="genre-btn">Género 2</button>
+    <div class="songs">
+
+<!-- Canción 1 -->
+<button class="song-btn" data-original-key="C">Canción 1</button>
+<div class="song-content">
+  <pre class="chord-sheet">
+C       G
+Letra de la canción 1
+Am      F
+Otra línea aquí
+  </pre>
+</div>
+
+<!-- Canción 2 -->
+<button class="song-btn" data-original-key="D">Canción 2</button>
+<div class="song-content">
+  <pre class="chord-sheet">
+D       A
+Letra de la canción 2
+Bm      G
+Segunda línea
+  </pre>
+</div>
+
+    </div>
+  </section>
+
+</main>
+
+<h3>Canciones agregadas</h3>
+<div id="addedSongs">
+  <!-- Aquí se irán mostrando las canciones agregadas -->
+</div>
+
+<!-- FOOTER -->
+<footer class="bottom-bar">
+  <button id="addSongBtn">➕ Agregar</button>
+</footer>
+
+
+<script src="script.js"></script>
+</body>
+</html>
