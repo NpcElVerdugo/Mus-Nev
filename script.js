@@ -4,42 +4,33 @@ const menuBtn = document.getElementById("menuBtn");
 const sidebar = document.getElementById("sidebar");
 menuBtn.onclick = () => sidebar.classList.toggle("active");
 
-let activeSong = null;        // referencia a canción abierta
-let originalKey = "C";        // nota original de la canción
-let transposeSteps = 0;       // pasos según selector o botones
+let activeSong = null;
+let originalKey = "C";
+let transposeSteps = 0;
 const addedSongsContainer = document.getElementById("addedSongs");
 
 const currentKeyLabel = document.getElementById("currentKey");
 const noteSelector = document.getElementById("noteSelector");
 const capoSelector = document.getElementById("capoSelector");
-document.addEventListener("click", (e) => {
-  const clickedInsideSidebar = sidebar.contains(e.target);
-  const clickedMenuBtn = menuBtn.contains(e.target);
 
-  if (!clickedInsideSidebar && !clickedMenuBtn) {
+// Sidebar close
+document.addEventListener("click", (e) => {
+  if (!sidebar.contains(e.target) && !menuBtn.contains(e.target)) {
     sidebar.classList.remove("active");
   }
 });
 
-
-// ====================
-// BOTONES SUBIR/BAJAR
-// ====================
-document.getElementById("upHalf").onclick = () => changeTranspose(1);   // medio tono = 1 semitono
+// Botones transposición
+document.getElementById("upHalf").onclick = () => changeTranspose(1);
 document.getElementById("downHalf").onclick = () => changeTranspose(-1);
-
-document.getElementById("upKey").onclick = () => changeTranspose(2);    // 1 tono = 2 semitonos
+document.getElementById("upKey").onclick = () => changeTranspose(2);
 document.getElementById("downKey").onclick = () => changeTranspose(-2);
-
 
 function changeTranspose(step){
   transposeSteps += step;
   updateSong();
 }
 
-// ====================
-// SELECTOR NOTA
-// ====================
 noteSelector.onchange = () => {
   if (!activeSong) return;
   const targetNote = noteSelector.value;
@@ -49,14 +40,9 @@ noteSelector.onchange = () => {
   updateSong();
 };
 
-// ====================
-// SELECTOR CAPO
-// ====================
 capoSelector.onchange = () => updateSong();
 
-// ====================
-// ACORDEÓN CATEGORÍAS
-// ====================
+// Acordeón categorías
 document.querySelectorAll(".genre-btn").forEach(btn => {
   btn.onclick = () => {
     const songsDiv = btn.nextElementSibling;
@@ -64,51 +50,52 @@ document.querySelectorAll(".genre-btn").forEach(btn => {
   };
 });
 
-// ====================
-// ACORDEÓN CANCIONES
-// ====================
+// Acordeón canciones
 document.querySelectorAll(".song-btn").forEach(btn => {
   btn.onclick = () => {
-    document.querySelectorAll(".song-content").forEach(sc => sc.style.display = "none");
-
     const content = btn.nextElementSibling;
-    content.style.display = "block";
-    activeSong = content.querySelector(".chord-sheet");
+    const isOpen = content.style.display === "block";
 
-    transposeSteps = 0;
+    // cerrar todas
+    document.querySelectorAll(".song-content").forEach(sc => {
+      sc.style.display = "none";
+    });
 
-    // Nota original desde el botón
-    originalKey = btn.dataset.originalKey || "C";
-    document.getElementById("originalKey").textContent = originalKey;
-    noteSelector.value = originalKey;
-    capoSelector.value = 0;
+    // si estaba cerrada → abrir
+    if (!isOpen) {
+      content.style.display = "block";
+      activeSong = content.querySelector(".chord-sheet");
 
-    updateSong();
+      transposeSteps = 0;
+      originalKey = btn.dataset.originalKey || "C";
+      document.getElementById("originalKey").textContent = originalKey;
+      noteSelector.value = originalKey;
+      capoSelector.value = 0;
+
+      updateSong();
+    } else {
+      // si estaba abierta → cerrar
+      activeSong = null;
+    }
   };
 });
 
-// ====================
-// FUNCIONES DE TRANSPOSICIÓN
-// ====================
+// Función de transposición
 function updateSong(){
   if (!activeSong) return;
 
   const capo = parseInt(capoSelector.value) || 0;
   const totalStep = transposeSteps + capo;
 
-  const originalText = activeSong.dataset.original || activeSong.textContent;
+  const originalText = activeSong.dataset.original || activeSong.innerHTML;
   activeSong.dataset.original = originalText;
 
-  activeSong.textContent = transposeText(originalText, totalStep);
+  activeSong.innerHTML = transposeText(originalText, totalStep);
 
-  // Nota actual
   const currentIndex = (NOTES.indexOf(originalKey) + totalStep + 12) % 12;
   currentKeyLabel.textContent = NOTES[currentIndex];
 }
 
-// ====================
-// TRANSPONER ACORDES
-// ====================
 function transposeText(text, step){
   return text.replace(/\b([A-G])(#{0,1}|b{0,1})(m|maj|min|dim|aug)?(7)?\b/g,
     chord => transposeChord(chord, step)
@@ -129,9 +116,7 @@ function transposeChord(chord, step){
   return NOTES[newIndex] + suffix;
 }
 
-// ====================
-// AGREGAR CANCIÓN
-// ====================
+// Agregar canción
 document.querySelectorAll(".addSongBtn").forEach(btn => {
   btn.onclick = () => {
     if (!activeSong) return;
@@ -139,61 +124,47 @@ document.querySelectorAll(".addSongBtn").forEach(btn => {
     const songDiv = document.createElement("div");
     songDiv.classList.add("added-song");
 
+    const songButton = activeSong.closest(".song-content").previousElementSibling;
     const songName = document.createElement("p");
-    songName.textContent =
-      btn.closest(".songs")
-         .querySelector(".song-btn:focus")?.textContent || "Canción";
+    songName.textContent = songButton ? songButton.textContent : "Canción";
     songName.style.fontWeight = "bold";
     songDiv.appendChild(songName);
 
-    const keyInfo = document.createElement("p");
- 
-    songDiv.appendChild(keyInfo);
-
     const cloned = document.createElement("pre");
     cloned.classList.add("chord-sheet");
-    cloned.textContent = activeSong.textContent;
-
+    cloned.innerHTML = activeSong.innerHTML;
     songDiv.appendChild(cloned);
+
     addedSongsContainer.appendChild(songDiv);
   };
 });
 
-// ====================
-// BARRA DE BÚSQUEDA
-// ====================
-document.querySelector(".search").addEventListener("input", function(){
-  const term = this.value.toLowerCase();
-  document.querySelectorAll(".genre-section").forEach(section => {
-    let anyMatch = false;
+// Popup acorde
+const popup = document.createElement("div");
+popup.classList.add("chord-popup");
+document.body.appendChild(popup);
 
-    section.querySelectorAll(".song-btn").forEach(songBtn => {
-      const match = songBtn.textContent.toLowerCase().includes(term);
-      songBtn.style.display = match ? "block" : "none";
-      if(match) anyMatch = true;
-    });
-
-    section.style.display = anyMatch ? "block" : "none";
-  });
+document.addEventListener("click", e => {
+  if (e.target.tagName === "A") {
+    e.preventDefault();
+    const chord = e.target.textContent.trim();
+    popup.style.backgroundImage = `url('acordes/${chord}.png')`;
+    const rect = e.target.getBoundingClientRect();
+    popup.style.top = `${rect.bottom + window.scrollY + 5}px`;
+    popup.style.left = `${rect.left + window.scrollX}px`;
+    popup.style.display = "block";
+  } else {
+    popup.style.display = "none";
+  }
 });
 
-
-// ====================
-// BORRAR CANCIÓN
-// ====================
+// Limpiar canciones agregadas
 document.getElementById("clearSongsBtn").onclick = () => {
   addedSongsContainer.innerHTML = "";
 };
 
-
-const fullscreenBtn = document.getElementById("fullscreenBtn");
-
-fullscreenBtn.onclick = () => {
-  if (!document.fullscreenElement) {
-    document.documentElement.requestFullscreen();
-  } else {
-    document.exitFullscreen();
-  }
+// Fullscreen
+document.getElementById("fullscreenBtn").onclick = () => {
+  if (!document.fullscreenElement) document.documentElement.requestFullscreen();
+  else document.exitFullscreen();
 };
-
-

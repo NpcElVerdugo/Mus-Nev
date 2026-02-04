@@ -15,14 +15,6 @@ body {
   padding: 0 15px;
   border-bottom: 1px solid #cc6f12;
 }
-.top-bar button {
-  background: none;
-  border: none;
-  color: white;
-  font-size: 20px;
-  cursor: pointer;
-  margin-left: 10px;
-}
 
 /* SIDEBAR */
 .sidebar {
@@ -96,7 +88,7 @@ body {
 
 .song-content {
   display: none;
-  padding: 0px;
+  padding: 10px;
   background: #000;
 }
 
